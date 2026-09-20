@@ -1,26 +1,200 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* =========================================================
+   CODE SENTINEL — DESIGN SYSTEM
+   ========================================================= */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+:root {
+  --background: #05070a;
+  --foreground: #f5f7fa;
+
+  --surface: #090d12;
+  --surface-2: #0d131a;
+  --surface-3: #111820;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(34, 211, 238, 0.3);
+
+  --primary: #22d3ee;
+  --primary-dark: #0891b2;
+  --primary-soft: rgba(34, 211, 238, 0.1);
+
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+
+  --muted: #8b98a8;
+  --muted-dark: #5d6875;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================================================
+   BASE
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: rgba(34, 211, 238, 0.25);
+  color: white;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #05070a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1c2732;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3947;
+}
+
+/* =========================================================
+   CODE SENTINEL UTILITIES
+   ========================================================= */
+
+.cs-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.cs-glow {
+  box-shadow:
+    0 0 80px rgba(34, 211, 238, 0.08),
+    0 0 30px rgba(34, 211, 238, 0.04);
+}
+
+.cs-glow-sm {
+  box-shadow: 0 0 25px rgba(34, 211, 238, 0.08);
+}
+
+.cs-border {
+  border: 1px solid var(--border);
+}
+
+.cs-card {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.045),
+    rgba(255, 255, 255, 0.015)
+  );
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.cs-card:hover {
+  border-color: var(--border-hover);
+}
+
+/* =========================================================
+   GRADIENT TEXT
+   ========================================================= */
+
+.cs-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #a5f3fc 45%,
+    #22d3ee 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.cs-pulse {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.cs-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+button,
+a,
+input,
+textarea {
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.6);
+  outline-offset: 3px;
 }
