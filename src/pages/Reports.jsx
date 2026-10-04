@@ -1,7 +1,4 @@
-"use client";
-
 import {
-  ArrowDown,
   ArrowUpRight,
   BarChart3,
   Bell,
@@ -25,6 +22,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const reports = [
   {
@@ -100,12 +98,8 @@ function SidebarItem({
   icon,
   label,
   active = false,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
 }) {
-  const routes: Record<string, string> = {
+  const routes = {
     Dashboard: "/dashboard",
     Repositories: "/repositories",
     Analyses: "/analysis",
@@ -115,8 +109,8 @@ function SidebarItem({
   };
 
   return (
-    <a
-      href={routes[label] || "#"}
+    <Link
+      to={routes[label] || "#"}
       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs transition ${
         active
           ? "bg-cyan-400/10 text-cyan-300"
@@ -125,16 +119,13 @@ function SidebarItem({
     >
       <span className="[&_svg]:h-4 [&_svg]:w-4">{icon}</span>
       {label}
-    </a>
+    </Link>
   );
 }
 
 function ScoreRing({
   score,
   size = 150,
-}: {
-  score: number;
-  size?: number;
 }) {
   const radius = 52;
   const circumference = 2 * Math.PI * radius;
@@ -206,7 +197,7 @@ export default function ReportsPage() {
       >
         {/* Logo */}
         <div className="flex h-[86px] items-center border-b border-white/[0.06] px-6">
-          <a href="/dashboard" className="flex items-center gap-3">
+          <Link to="/dashboard" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400/10">
               <Shield className="h-5 w-5 text-cyan-400" />
             </div>
@@ -214,7 +205,7 @@ export default function ReportsPage() {
             <span className="text-[17px] font-semibold tracking-tight">
               Code<span className="text-cyan-400">Sentinel</span>
             </span>
-          </a>
+          </Link>
 
           <button
             onClick={() => setMobileOpen(false)}
@@ -347,7 +338,10 @@ export default function ReportsPage() {
                 </p>
               </div>
 
-              <button className="flex w-fit items-center gap-2 rounded-lg border border-cyan-400/20 bg-cyan-400/10 px-4 py-2.5 text-xs font-medium text-cyan-300 transition hover:bg-cyan-400/15">
+              <button
+                onClick={() => alert("Report exported successfully as PDF.")}
+                className="flex w-fit items-center gap-2 rounded-lg border border-cyan-400/20 bg-cyan-400/10 px-4 py-2.5 text-xs font-medium text-cyan-300 transition hover:bg-cyan-400/15"
+              >
                 <Download className="h-4 w-4" />
                 Export report
               </button>

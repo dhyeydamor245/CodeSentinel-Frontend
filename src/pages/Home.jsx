@@ -8,6 +8,7 @@ import {
   Terminal,
   Zap,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
       <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/[0.06] bg-[#05070a]/80 backdrop-blur-xl">
         <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
               <ShieldCheck className="h-5 w-5 text-cyan-400" />
             </div>
@@ -24,7 +25,7 @@ export default function Home() {
             <span className="text-lg font-semibold tracking-tight">
               Code<span className="text-cyan-400">Sentinel</span>
             </span>
-          </a>
+          </Link>
 
           {/* Navigation */}
           <div className="hidden items-center gap-8 text-sm text-gray-400 md:flex">
@@ -43,19 +44,19 @@ export default function Home() {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="hidden px-4 py-2 text-sm text-gray-300 transition hover:text-white sm:block"
             >
               Sign in
-            </a>
+            </Link>
 
-            <a
-              href="/dashboard"
+            <Link
+              to="/dashboard"
               className="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-gray-200"
             >
               Get started
-            </a>
+            </Link>
           </div>
         </nav>
       </header>
@@ -100,14 +101,14 @@ export default function Home() {
 
             {/* Buttons */}
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href="/dashboard"
+              <Link
+                to="/dashboard"
                 className="group flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-cyan-300 sm:w-auto"
               >
                 Analyze your project
 
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-              </a>
+              </Link>
 
               <a
                 href="#workflow"
@@ -388,6 +389,58 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ================= SECURITY SECTION ================= */}
+      <section
+        id="security"
+        className="border-t border-white/[0.06] py-28"
+      >
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">
+              Enterprise Grade
+            </p>
+
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">
+              Security built for
+              <br />
+              <span className="text-gray-500">every stage of development.</span>
+            </h2>
+          </div>
+
+          <div className="mt-16 grid gap-6 md:grid-cols-3">
+            <div className="cs-card rounded-2xl p-7">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-400">
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+              <h3 className="mt-6 text-lg font-semibold">Zero-Knowledge Scanning</h3>
+              <p className="mt-3 text-sm leading-6 text-gray-500">
+                Your code is analyzed in memory with ephemeral execution containers. No source code is stored permanently.
+              </p>
+            </div>
+
+            <div className="cs-card rounded-2xl p-7">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-400">
+                <Terminal className="h-5 w-5" />
+              </div>
+              <h3 className="mt-6 text-lg font-semibold">Static & AI Defense</h3>
+              <p className="mt-3 text-sm leading-6 text-gray-500">
+                Combining rule-based static analyzers (Semgrep, Bandit) with advanced AI reasoning models for zero false-positive fatigue.
+              </p>
+            </div>
+
+            <div className="cs-card rounded-2xl p-7">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-400">
+                <Zap className="h-5 w-5" />
+              </div>
+              <h3 className="mt-6 text-lg font-semibold">Automated CI/CD Integration</h3>
+              <p className="mt-3 text-sm leading-6 text-gray-500">
+                Protect branches before PRs are merged. Trigger immediate evaluations upon commits and tag releases.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ================= CTA ================= */}
       <section className="relative overflow-hidden border-t border-white/[0.06] py-28">
         <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/[0.08] blur-[100px]" />
@@ -410,14 +463,14 @@ export default function Home() {
             Give your engineering team an AI-powered second pair of eyes.
           </p>
 
-          <a
-            href="/dashboard"
+          <Link
+            to="/dashboard"
             className="mt-8 inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-cyan-300"
           >
             Start your first audit
 
             <ArrowRight className="h-4 w-4" />
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -443,13 +496,7 @@ export default function Home() {
    PREVIEW COMPONENTS
    ========================================================= */
 
-function PreviewNav({
-  text,
-  active = false,
-}: {
-  text: string;
-  active?: boolean;
-}) {
+function PreviewNav({ text, active = false }) {
   return (
     <div
       className={`rounded-md px-3 py-2 ${
@@ -463,17 +510,7 @@ function PreviewNav({
   );
 }
 
-function PreviewStat({
-  label,
-  value,
-  suffix,
-  icon,
-}: {
-  label: string;
-  value: string;
-  suffix?: string;
-  icon: React.ReactNode;
-}) {
+function PreviewStat({ label, value, suffix, icon }) {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.015] p-4">
       <div className="flex items-center justify-between">
@@ -499,17 +536,7 @@ function PreviewStat({
   );
 }
 
-function Feature({
-  icon,
-  number,
-  title,
-  text,
-}: {
-  icon: React.ReactNode;
-  number: string;
-  title: string;
-  text: string;
-}) {
+function Feature({ icon, number, title, text }) {
   return (
     <div className="cs-card group rounded-2xl p-6 transition duration-300 hover:-translate-y-1">
       <div className="flex items-start justify-between">
@@ -533,15 +560,7 @@ function Feature({
   );
 }
 
-function WorkflowStep({
-  number,
-  title,
-  text,
-}: {
-  number: string;
-  title: string;
-  text: string;
-}) {
+function WorkflowStep({ number, title, text }) {
   return (
     <div className="cs-card rounded-2xl p-7">
       <span className="font-mono text-sm text-cyan-400">

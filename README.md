@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CodeSentinel Frontend (React + Vite)
+
+CodeSentinel is an AI-powered software project auditor and security analysis platform. This frontend has been converted from Next.js to a high-performance **React SPA (Single Page Application)** using **Vite**, **React Router**, and **Tailwind CSS v4**.
+
+## Features
+
+- **Home / Landing Page (`/`)**: Hero section, interactive project preview, feature showcase, workflow steps, security overview, and call-to-actions.
+- **Authentication (`/login`)**: Secure sign-in screen with password visibility toggle, remember-me support, and security badge metrics.
+- **Dashboard (`/dashboard`)**: Security health score, 30-day interactive SVG trend charts, posture breakdown, open findings, and recent analyses.
+- **Repositories (`/repositories`)**: Manage connected projects, search & branch filters, health badges, and "Connect repository" modal with GitHub integration.
+- **Live Analysis (`/analysis`)**: Real-time multi-stage pipeline (Repository Scan, Static Analysis, AI Engineering Review, Architecture Analysis), AI agents status, pause/resume simulation, and live console logs.
+- **Findings (`/findings`)**: Security vulnerabilities and code issues with severity categorization (Critical, High, Medium, Low), rule filters, affected code snippets with copy button, and remediation guidance.
+- **Reports (`/reports`)**: Executive summaries, SVG score ring, risk distribution graphs, duration metrics, and historical audit logs.
+- **Settings (`/settings`)**: Profile settings, API keys management with copy feature, and alert preferences.
+
+## Tech Stack
+
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vite.dev/)
+- **Routing**: [React Router v7](https://reactrouter.com/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with `@tailwindcss/vite`
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Typography**: [Geist](https://vercel.com/font) via Google Fonts
 
 ## Getting Started
 
-First, run the development server:
+### Development
+
+Run the Vite development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be accessible at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build for production:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Preview the production build locally:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run preview
+```

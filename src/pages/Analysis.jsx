@@ -1,11 +1,8 @@
-"use client";
-
 import {
   Activity,
   ArrowLeft,
   BrainCircuit,
   Check,
-  CheckCircle2,
   ChevronDown,
   Clock3,
   Code2,
@@ -22,9 +19,9 @@ import {
   Sparkles,
   Terminal,
   X,
-  Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const stages = [
   {
@@ -122,7 +119,7 @@ export default function AnalysisPage() {
         }`}
       >
         <div className="flex h-20 items-center justify-between border-b border-white/[0.07] px-6">
-          <a href="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
               <ShieldCheck className="h-5 w-5 text-cyan-400" />
             </div>
@@ -130,7 +127,7 @@ export default function AnalysisPage() {
             <span className="font-semibold tracking-tight">
               Code<span className="text-cyan-400">Sentinel</span>
             </span>
-          </a>
+          </Link>
 
           <button
             onClick={() => setSidebarOpen(false)}
@@ -247,13 +244,13 @@ export default function AnalysisPage() {
 
           <div className="relative mx-auto max-w-[1450px]">
             {/* Back */}
-            <a
-              href="/repositories"
+            <Link
+              to="/repositories"
               className="mb-7 flex w-fit items-center gap-2 text-xs text-gray-600 transition hover:text-gray-300"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               Back to repositories
-            </a>
+            </Link>
 
             {/* Header */}
             <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
@@ -651,13 +648,7 @@ export default function AnalysisPage() {
 
 /* ================= COMPONENTS ================= */
 
-function NavSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function NavSection({ title, children }) {
   return (
     <div className="mb-7">
       <p className="mb-2 px-3 text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-700">
@@ -669,20 +660,10 @@ function NavSection({
   );
 }
 
-function SidebarItem({
-  icon,
-  label,
-  active = false,
-  href,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  href: string;
-}) {
+function SidebarItem({ icon, label, active = false, href }) {
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs transition ${
         active
           ? "bg-cyan-400/10 text-cyan-300"
@@ -694,19 +675,11 @@ function SidebarItem({
       </span>
 
       {label}
-    </a>
+    </Link>
   );
 }
 
-function LogLine({
-  time,
-  type,
-  text,
-}: {
-  time: string;
-  type: "info" | "success";
-  text: string;
-}) {
+function LogLine({ time, type, text }) {
   return (
     <div className="flex gap-3">
       <span className="text-gray-700">{time}</span>

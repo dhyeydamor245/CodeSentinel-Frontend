@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ArrowRight,
   CheckCircle2,
@@ -13,6 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,8 +28,8 @@ export default function LoginPage() {
 
       {/* Top navigation */}
       <header className="relative z-20 flex h-20 items-center justify-between border-b border-white/[0.06] px-6 sm:px-10">
-        <a
-          href="/"
+        <Link
+          to="/"
           className="flex items-center gap-3 transition-opacity hover:opacity-80"
         >
           <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400/10">
@@ -40,14 +39,14 @@ export default function LoginPage() {
           <span className="text-lg font-semibold tracking-tight">
             Code<span className="text-cyan-400">Sentinel</span>
           </span>
-        </a>
+        </Link>
 
-        <a
-          href="/"
+        <Link
+          to="/"
           className="text-xs text-gray-500 transition hover:text-gray-200"
         >
           Back to home
-        </a>
+        </Link>
       </header>
 
       {/* Main content */}
@@ -331,13 +330,13 @@ export default function LoginPage() {
             </div>
 
             {/* Sign in */}
-            <a
-              href="/dashboard"
+            <Link
+              to="/dashboard"
               className="group mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-cyan-400 text-sm font-semibold text-[#031014] shadow-lg shadow-cyan-400/10 transition hover:bg-cyan-300 hover:shadow-cyan-400/20"
             >
               Sign in
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            </Link>
 
             {/* Security message */}
             <div className="mt-5 flex items-center justify-center gap-2 text-[10px] text-gray-600">
@@ -351,12 +350,12 @@ export default function LoginPage() {
                 Don't have a workspace?
               </span>
 
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="ml-2 text-xs font-medium text-cyan-400 transition hover:text-cyan-300"
               >
                 Get started
-              </a>
+              </Link>
             </div>
           </div>
 

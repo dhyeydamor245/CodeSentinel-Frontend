@@ -1,5 +1,3 @@
-"use client";
-
 import {
   AlertTriangle,
   ArrowUpRight,
@@ -7,12 +5,10 @@ import {
   Bug,
   CheckCircle2,
   ChevronDown,
-  Code2,
   Copy,
   FileCode2,
   Filter,
   FolderGit2,
-  GitBranch,
   LayoutDashboard,
   Menu,
   Search,
@@ -24,6 +20,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const findings = [
   {
@@ -125,9 +122,7 @@ export default function FindingsPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [severity, setSeverity] = useState("All");
-  const [selectedFinding, setSelectedFinding] = useState<
-    (typeof findings)[number] | null
-  >(null);
+  const [selectedFinding, setSelectedFinding] = useState(null);
 
   const filteredFindings = findings.filter((finding) => {
     const matchesSearch =
@@ -159,7 +154,7 @@ export default function FindingsPage() {
         }`}
       >
         <div className="flex h-20 items-center justify-between border-b border-white/[0.07] px-6">
-          <a href="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
               <ShieldCheck className="h-5 w-5 text-cyan-400" />
             </div>
@@ -167,7 +162,7 @@ export default function FindingsPage() {
             <span className="font-semibold tracking-tight">
               Code<span className="text-cyan-400">Sentinel</span>
             </span>
-          </a>
+          </Link>
 
           <button
             onClick={() => setSidebarOpen(false)}
@@ -448,13 +443,7 @@ export default function FindingsPage() {
 
 /* ================= COMPONENTS ================= */
 
-function NavSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function NavSection({ title, children }) {
   return (
     <div className="mb-7">
       <p className="mb-2 px-3 text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-700">
@@ -466,20 +455,10 @@ function NavSection({
   );
 }
 
-function SidebarItem({
-  icon,
-  label,
-  active = false,
-  href,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  href: string;
-}) {
+function SidebarItem({ icon, label, active = false, href }) {
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs transition ${
         active
           ? "bg-cyan-400/10 text-cyan-300"
@@ -491,21 +470,11 @@ function SidebarItem({
       </span>
 
       {label}
-    </a>
+    </Link>
   );
 }
 
-function SeverityCard({
-  label,
-  count,
-  color,
-  icon,
-}: {
-  label: string;
-  count: string;
-  color: "red" | "orange" | "yellow" | "blue";
-  icon: React.ReactNode;
-}) {
+function SeverityCard({ label, count, color, icon }) {
   const styles = {
     red: "border-red-400/20 bg-red-400/5 text-red-400",
     orange: "border-orange-400/20 bg-orange-400/5 text-orange-400",
@@ -532,16 +501,8 @@ function SeverityCard({
   );
 }
 
-function FindingCard({
-  finding,
-  onOpen,
-}: {
-  finding: (typeof findings)[number];
-  onOpen: () => void;
-}) {
-  const style =
-    severityStyles[finding.severity as keyof typeof severityStyles];
-
+function FindingCard({ finding, onOpen }) {
+  const style = severityStyles[finding.severity];
   const Icon = style.icon;
 
   return (
@@ -606,16 +567,8 @@ function FindingCard({
 
 /* ================= DETAIL MODAL ================= */
 
-function FindingDetail({
-  finding,
-  onClose,
-}: {
-  finding: (typeof findings)[number];
-  onClose: () => void;
-}) {
-  const style =
-    severityStyles[finding.severity as keyof typeof severityStyles];
-
+function FindingDetail({ finding, onClose }) {
+  const style = severityStyles[finding.severity];
   const Icon = style.icon;
 
   return (
@@ -686,7 +639,14 @@ function FindingDetail({
                 Affected code
               </h3>
 
-              <button className="flex items-center gap-1.5 text-[10px] text-gray-600 hover:text-white">
+              <button
+                onClick={() => {
+                  navigator.clipboard?.writeText(
+                    `const config = loadConfig();\nconst environment = process.env.NODE_ENV;\nconst apiKey = "SECRET_KEY_EXPOSED";\nexport default { apiKey, environment };`
+                  );
+                }}
+                className="flex items-center gap-1.5 text-[10px] text-gray-600 hover:text-white"
+              >
                 <Copy className="h-3 w-3" />
                 Copy
               </button>
@@ -763,13 +723,7 @@ function FindingDetail({
   );
 }
 
-function Meta({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function Meta({ label, value }) {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
       <p className="text-[9px] uppercase tracking-widest text-gray-700">

@@ -1,12 +1,8 @@
-"use client";
-
 import {
   Activity,
-  AlertTriangle,
   ArrowUpRight,
   Bell,
   Bug,
-  CheckCircle2,
   ChevronDown,
   Clock3,
   FileCode2,
@@ -23,6 +19,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const findings = [
   {
@@ -59,6 +56,7 @@ const findings = [
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-[#05070a] text-white">
@@ -79,7 +77,7 @@ export default function Dashboard() {
       >
         {/* Logo */}
         <div className="flex h-20 items-center justify-between border-b border-white/[0.07] px-6">
-          <a href="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
               <ShieldCheck className="h-5 w-5 text-cyan-400" />
             </div>
@@ -87,7 +85,7 @@ export default function Dashboard() {
             <span className="font-semibold tracking-tight">
               Code<span className="text-cyan-400">Sentinel</span>
             </span>
-          </a>
+          </Link>
 
           <button
             onClick={() => setSidebarOpen(false)}
@@ -136,10 +134,13 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <button className="mt-3 flex w-full items-center gap-3 rounded-lg px-2 py-2 text-xs text-gray-500 transition hover:bg-white/5 hover:text-white">
+          <Link
+            to="/login"
+            className="mt-3 flex w-full items-center gap-3 rounded-lg px-2 py-2 text-xs text-gray-500 transition hover:bg-white/5 hover:text-white"
+          >
             <LogOut className="h-4 w-4" />
             Sign out
-          </button>
+          </Link>
         </div>
       </aside>
 
@@ -218,7 +219,10 @@ export default function Dashboard() {
                 </p>
               </div>
 
-              <button className="flex w-fit items-center gap-2 rounded-xl bg-cyan-400 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-cyan-300">
+              <button
+                onClick={() => navigate("/analysis")}
+                className="flex w-fit items-center gap-2 rounded-xl bg-cyan-400 px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-cyan-300"
+              >
                 <Zap className="h-4 w-4" />
                 New analysis
               </button>
@@ -434,10 +438,13 @@ export default function Dashboard() {
                     </h2>
                   </div>
 
-                  <button className="flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300">
+                  <Link
+                    to="/findings"
+                    className="flex items-center gap-1 text-xs text-cyan-400 hover:text-cyan-300"
+                  >
                     View all
                     <ArrowUpRight className="h-3.5 w-3.5" />
-                  </button>
+                  </Link>
                 </div>
 
                 <div className="mt-5 divide-y divide-white/[0.06]">
@@ -445,9 +452,10 @@ export default function Dashboard() {
                     const Icon = finding.icon;
 
                     return (
-                      <div
+                      <Link
+                        to="/findings"
                         key={finding.title}
-                        className="flex items-center gap-4 py-4"
+                        className="flex items-center gap-4 py-4 transition hover:opacity-80"
                       >
                         <div
                           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${finding.bg} ${finding.color}`}
@@ -472,7 +480,7 @@ export default function Dashboard() {
                         </span>
 
                         <ArrowUpRight className="h-4 w-4 text-gray-700" />
-                      </div>
+                      </Link>
                     );
                   })}
                 </div>
@@ -515,9 +523,12 @@ export default function Dashboard() {
                   />
                 </div>
 
-                <button className="mt-6 w-full rounded-lg border border-white/[0.07] py-2.5 text-xs text-gray-400 transition hover:bg-white/5 hover:text-white">
+                <Link
+                  to="/analysis"
+                  className="mt-6 block w-full text-center rounded-lg border border-white/[0.07] py-2.5 text-xs text-gray-400 transition hover:bg-white/5 hover:text-white"
+                >
                   View analysis history
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -539,13 +550,7 @@ export default function Dashboard() {
 
 /* ================= COMPONENTS ================= */
 
-function NavSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function NavSection({ title, children }) {
   return (
     <div className="mb-7">
       <p className="mb-2 px-3 text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-700">
@@ -557,16 +562,8 @@ function NavSection({
   );
 }
 
-function SidebarItem({
-  icon,
-  label,
-  active = false,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-}) {
-  const routes: Record<string, string> = {
+function SidebarItem({ icon, label, active = false }) {
+  const routes = {
     Dashboard: "/dashboard",
     Repositories: "/repositories",
     Analyses: "/analysis",
@@ -576,8 +573,8 @@ function SidebarItem({
   };
 
   return (
-    <a
-      href={routes[label] || "#"}
+    <Link
+      to={routes[label] || "#"}
       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs transition ${
         active
           ? "bg-cyan-400/10 text-cyan-300"
@@ -586,7 +583,7 @@ function SidebarItem({
     >
       <span className="[&_svg]:h-4 [&_svg]:w-4">{icon}</span>
       {label}
-    </a>
+    </Link>
   );
 }
 
@@ -597,13 +594,6 @@ function StatCard({
   trend,
   trendPositive,
   icon,
-}: {
-  label: string;
-  value: string;
-  suffix?: string;
-  trend: string;
-  trendPositive: boolean;
-  icon: React.ReactNode;
 }) {
   return (
     <div className="cs-card group rounded-2xl p-5 transition hover:border-cyan-400/20">
@@ -638,15 +628,7 @@ function StatCard({
   );
 }
 
-function ScoreRow({
-  label,
-  value,
-  width,
-}: {
-  label: string;
-  value: string;
-  width: string;
-}) {
+function ScoreRow({ label, value, width }) {
   return (
     <div>
       <div className="mb-1.5 flex justify-between text-[10px]">
@@ -664,17 +646,7 @@ function ScoreRow({
   );
 }
 
-function AnalysisItem({
-  project,
-  branch,
-  score,
-  time,
-}: {
-  project: string;
-  branch: string;
-  score: string;
-  time: string;
-}) {
+function AnalysisItem({ project, branch, score, time }) {
   return (
     <div className="flex items-center gap-3">
       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.04]">

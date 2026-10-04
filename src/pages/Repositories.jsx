@@ -1,10 +1,7 @@
-"use client";
-
 import {
   Activity,
   ArrowUpRight,
   Bell,
-  Branch,
   CheckCircle2,
   ChevronDown,
   Clock3,
@@ -23,7 +20,9 @@ import {
   X,
   Zap,
 } from "lucide-react";
+
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const repositories = [
   {
@@ -96,7 +95,7 @@ export default function RepositoriesPage() {
         }`}
       >
         <div className="flex h-20 items-center justify-between border-b border-white/[0.07] px-6">
-          <a href="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
               <ShieldCheck className="h-5 w-5 text-cyan-400" />
             </div>
@@ -104,7 +103,7 @@ export default function RepositoriesPage() {
             <span className="font-semibold tracking-tight">
               Code<span className="text-cyan-400">Sentinel</span>
             </span>
-          </a>
+          </Link>
 
           <button
             onClick={() => setSidebarOpen(false)}
@@ -154,7 +153,7 @@ export default function RepositoriesPage() {
             <SidebarItem
               icon={<Settings />}
               label="Settings"
-              href="#"
+              href="/settings"
             />
           </NavSection>
         </div>
@@ -175,10 +174,13 @@ export default function RepositoriesPage() {
             </div>
           </div>
 
-          <button className="mt-3 flex w-full items-center gap-3 rounded-lg px-2 py-2 text-xs text-gray-500 hover:bg-white/5 hover:text-white">
+          <Link
+            to="/login"
+            className="mt-3 flex w-full items-center gap-3 rounded-lg px-2 py-2 text-xs text-gray-500 hover:bg-white/5 hover:text-white"
+          >
             <LogOut className="h-4 w-4" />
             Sign out
-          </button>
+          </Link>
         </div>
       </aside>
 
@@ -214,7 +216,6 @@ export default function RepositoriesPage() {
           <div className="flex items-center gap-3">
             <button className="relative rounded-lg border border-white/[0.07] p-2.5 text-gray-400 hover:bg-white/5 hover:text-white">
               <Bell className="h-4 w-4" />
-
               <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan-400" />
             </button>
 
@@ -246,9 +247,7 @@ export default function RepositoriesPage() {
                 <div className="mb-3 flex items-center gap-2 text-xs text-gray-600">
                   <span>Workspace</span>
                   <span>/</span>
-                  <span className="text-gray-400">
-                    Repositories
-                  </span>
+                  <span className="text-gray-400">Repositories</span>
                 </div>
 
                 <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -317,10 +316,7 @@ export default function RepositoriesPage() {
             {/* Repository list */}
             <div className="mt-8 space-y-4">
               {filteredRepositories.map((repo) => (
-                <RepositoryCard
-                  key={repo.name}
-                  repo={repo}
-                />
+                <RepositoryCard key={repo.name} repo={repo} />
               ))}
 
               {filteredRepositories.length === 0 && (
@@ -361,13 +357,7 @@ export default function RepositoriesPage() {
 
 /* ================= SIDEBAR ================= */
 
-function NavSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function NavSection({ title, children }) {
   return (
     <div className="mb-7">
       <p className="mb-2 px-3 text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-700">
@@ -384,15 +374,10 @@ function SidebarItem({
   label,
   active = false,
   href,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  href: string;
 }) {
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs transition ${
         active
           ? "bg-cyan-400/10 text-cyan-300"
@@ -401,21 +386,13 @@ function SidebarItem({
     >
       <span className="[&_svg]:h-4 [&_svg]:w-4">{icon}</span>
       {label}
-    </a>
+    </Link>
   );
 }
 
 /* ================= STATS ================= */
 
-function MiniStat({
-  label,
-  value,
-  icon,
-}: {
-  label: string;
-  value: string;
-  icon: React.ReactNode;
-}) {
+function MiniStat({ label, value, icon }) {
   return (
     <div className="cs-card flex items-center gap-4 rounded-xl p-4">
       <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-400 [&_svg]:h-4 [&_svg]:w-4">
@@ -432,11 +409,8 @@ function MiniStat({
 
 /* ================= REPOSITORY CARD ================= */
 
-function RepositoryCard({
-  repo,
-}: {
-  repo: (typeof repositories)[number];
-}) {
+function RepositoryCard({ repo }) {
+  const navigate = useNavigate();
   const healthy = repo.status === "Healthy";
 
   return (
@@ -525,12 +499,18 @@ function RepositoryCard({
 
         {/* Action */}
         <div className="flex items-center gap-2 lg:ml-2">
-          <button className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.025] px-4 py-2.5 text-xs font-medium text-gray-300 transition hover:bg-white/[0.06] hover:text-white sm:flex-none">
+          <button
+            onClick={() => navigate("/analysis")}
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.025] px-4 py-2.5 text-xs font-medium text-gray-300 transition hover:bg-white/[0.06] hover:text-white sm:flex-none"
+          >
             View
             <ArrowUpRight className="h-3.5 w-3.5" />
           </button>
 
-          <button className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-cyan-400 px-4 py-2.5 text-xs font-semibold text-black transition hover:bg-cyan-300 sm:flex-none">
+          <button
+            onClick={() => navigate("/analysis")}
+            className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-cyan-400 px-4 py-2.5 text-xs font-semibold text-black transition hover:bg-cyan-300 sm:flex-none"
+          >
             <Zap className="h-3.5 w-3.5" />
             Analyze
           </button>
@@ -542,11 +522,7 @@ function RepositoryCard({
 
 /* ================= MODAL ================= */
 
-function AddRepositoryModal({
-  onClose,
-}: {
-  onClose: () => void;
-}) {
+function AddRepositoryModal({ onClose }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-5 backdrop-blur-md">
       <div className="relative w-full max-w-lg rounded-2xl border border-white/[0.1] bg-[#0a0e13] shadow-2xl shadow-black/50">
@@ -612,7 +588,12 @@ function AddRepositoryModal({
             </label>
 
             <div className="flex items-center rounded-xl border border-white/[0.08] bg-white/[0.025] px-4 focus-within:border-cyan-400/30">
-              <Github className="h-4 w-4 text-gray-600" />
+              <svg
+                viewBox="0 0 24 24"
+                className="h-4 w-4 fill-gray-600"
+              >
+                <path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.75.08-.74.08-.74 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.47 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z" />
+              </svg>
 
               <input
                 placeholder="https://github.com/username/repository"
